@@ -1,5 +1,3 @@
-import { useState, useEffect } from "react";
-import apiClient from "../services/apiClient";
 import { List, ListItem, useToast } from "@chakra-ui/react";
 import useGames from "../hooks/useGames";
 
