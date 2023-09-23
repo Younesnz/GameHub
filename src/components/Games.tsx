@@ -1,26 +1,13 @@
 import { useState, useEffect } from "react";
 import apiClient from "../services/apiClient";
 import { List, ListItem, useToast } from "@chakra-ui/react";
+import useGames from "../hooks/useGames";
 
-interface Game {
-  id: number;
-  name: string;
-}
-interface GameResult {
-  count: number;
-  results: Game[];
-}
 export const Games = () => {
-  const [games, setGames] = useState<Game[]>([]);
+  const { games, error } = useGames();
   const toast = useToast();
-  useEffect(() => {
-    apiClient
-      .get<GameResult>("/games")
-      .then((res) => setGames(res.data.results))
-      .catch((err) => showToast(err.message));
-    return () => {};
-  }, []);
-  const showToast = (error: string) => {
+
+  if (error)
     toast({
       title: "Getting the Games List Failed!",
       description: error,
@@ -29,7 +16,7 @@ export const Games = () => {
       status: "error",
       position: "top",
     });
-  };
+
   return (
     <List>
       {games.map((game) => (
