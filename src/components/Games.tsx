@@ -1,4 +1,4 @@
-import { List, ListItem, SimpleGrid, useToast } from "@chakra-ui/react";
+import { SimpleGrid, useToast } from "@chakra-ui/react";
 import useGames from "../hooks/useGames";
 import { GameCard } from "./GameCard";
 
