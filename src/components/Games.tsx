@@ -1,5 +1,6 @@
-import { List, ListItem, useToast } from "@chakra-ui/react";
+import { List, ListItem, SimpleGrid, useToast } from "@chakra-ui/react";
 import useGames from "../hooks/useGames";
+import { GameCard } from "./GameCard";
 
 export const Games = () => {
   const { games, error } = useGames();
@@ -16,10 +17,15 @@ export const Games = () => {
     });
 
   return (
-    <List>
+    <SimpleGrid columns={{ sm: 1, md: 2, lg: 3, xl: 4 }} spacing="4" p="4">
       {games.map((game) => (
-        <ListItem key={game.id}>{game.name}</ListItem>
+        <GameCard key={game.id} game={game} />
       ))}
-    </List>
+    </SimpleGrid>
+    // <List>
+    //   {games.map((game) => (
+    //     <ListItem key={game.id}>{game.name}</ListItem>
+    //   ))}
+    // </List>
   );
 };
