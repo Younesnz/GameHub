@@ -22,10 +22,5 @@ export const Games = () => {
         <GameCard key={game.id} game={game} />
       ))}
     </SimpleGrid>
-    // <List>
-    //   {games.map((game) => (
-    //     <ListItem key={game.id}>{game.name}</ListItem>
-    //   ))}
-    // </List>
   );
 };
