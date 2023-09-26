@@ -5,6 +5,7 @@ import { Games } from "./components/Games";
 function App() {
   return (
     <Grid
+      templateColumns={{ lg: "200px 1fr" }}
       gridTemplateAreas={{
         base: `"nav" "main"`,
         lg: `"nav nav" "aside main"`,
