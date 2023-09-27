@@ -27,7 +27,16 @@ export const GameCard = ({ game }: Props) => {
         />
       </AspectRatio>
 
-      <CardHeader py={2}>{game.name}</CardHeader>
+      <CardHeader
+        py={2}
+        whiteSpace="nowrap"
+        overflow="hidden"
+        textOverflow="ellipsis"
+        fontWeight="semibold"
+        fontSize="lg"
+      >
+        {game.name}
+      </CardHeader>
       <CardBody pt={1} pb={4}>
         <HStack>
           <PlatformList
