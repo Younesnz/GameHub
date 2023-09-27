@@ -1,4 +1,5 @@
 import {
+  AspectRatio,
   Card,
   CardBody,
   CardHeader,
@@ -18,11 +19,14 @@ interface Props {
 export const GameCard = ({ game }: Props) => {
   return (
     <Card overflow="hidden">
-      <Image
-        src={cropImgUrl(game.background_image)}
-        h={{ sm: "64", md: "52", lg: "48", xl: "40" }}
-        objectFit="cover"
-      />
+      <AspectRatio ratio={3 / 2}>
+        <Image
+          src={cropImgUrl(game.background_image)}
+          h={{ sm: "64", md: "52", lg: "48", xl: "40" }}
+          objectFit="cover"
+        />
+      </AspectRatio>
+
       <CardHeader py={2}>{game.name}</CardHeader>
       <CardBody pt={1} pb={4}>
         <HStack>
