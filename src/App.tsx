@@ -2,8 +2,10 @@ import { Grid, GridItem, Show } from "@chakra-ui/react";
 import { NavBar } from "./components/NavBar";
 import { Games } from "./components/Games";
 import { Genres } from "./components/Genres";
+import { useState } from "react";
 
 function App() {
+  const [currentGenre, setCurrentGenre] = useState<number | null>(null);
   return (
     <Grid
       templateColumns={{ lg: "240px 1fr" }}
@@ -17,12 +19,15 @@ function App() {
       </GridItem>
       <Show above="lg">
         <GridItem area="aside">
-          <Genres />
+          <Genres
+            currentGenre={currentGenre}
+            setCurrentGenre={setCurrentGenre}
+          />
         </GridItem>
       </Show>
 
       <GridItem area="main">
-        <Games />
+        <Games currentGenre={currentGenre} />
       </GridItem>
     </Grid>
   );

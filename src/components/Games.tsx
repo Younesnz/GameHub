@@ -3,8 +3,11 @@ import useGames from "../hooks/useGames";
 import { GameCard } from "./GameCard";
 import { GameCardSkeleton } from "./GameCardSkeleton";
 
-export const Games = () => {
-  const { data, error, isLoading } = useGames();
+interface Props {
+  currentGenre: number | null;
+}
+export const Games = ({ currentGenre }: Props) => {
+  const { data, error, isLoading } = useGames(currentGenre);
   const toast = useToast();
   const skeletonItems = new Array(12).fill(0);
   if (error)

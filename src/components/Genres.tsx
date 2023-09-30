@@ -12,11 +12,19 @@ import {
 import useGenres from "../hooks/useGenres";
 import { GenresSkeleton } from "./GenresSkeleton";
 
-export const Genres = () => {
+interface Props {
+  currentGenre: number | null;
+  setCurrentGenre: (id: number | null) => void;
+}
+
+export const Genres = ({ currentGenre, setCurrentGenre }: Props) => {
   const { data, isLoading, error } = useGenres();
   const toast = useToast();
   const { colorMode } = useColorMode();
   const skeletonItems = new Array(15).fill(0);
+  const secondaryColor = { dark: "gray.700", light: "gray.200" }[
+    colorMode.toString()
+  ];
   if (error)
     toast({
       title: "Getting the Genres List Failed!",
@@ -36,11 +44,8 @@ export const Genres = () => {
           <ListItem
             key={index}
             borderBottom="1px"
-            borderColor={
-              { dark: "gray.700", light: "gray.200" }[colorMode.toString()]
-            }
-            py={1}
-            px={2}
+            borderColor={secondaryColor}
+            p={2}
             ml={2}
           >
             <GenresSkeleton />
@@ -50,20 +55,19 @@ export const Genres = () => {
         <ListItem
           key={genre.id}
           cursor="pointer"
+          backgroundColor={genre.id === currentGenre ? secondaryColor : ""}
           _hover={{
             backgroundColor: { dark: "gray.700", light: "gray.200" }[
               colorMode.toString()
             ],
           }}
           transition="background-color ease 0.3s"
-          py={1}
-          px={2}
+          p={2}
           ml={2}
           borderRadius={5}
           borderBottom="1px"
-          borderColor={
-            { dark: "gray.700", light: "gray.200" }[colorMode.toString()]
-          }
+          borderColor={secondaryColor}
+          onClick={() => setCurrentGenre(genre.id)}
         >
           <HStack>
             <Image
