@@ -3,7 +3,7 @@ import useData from "./useData";
 interface PlatformDetails {
   games_count: number;
 }
-interface Platform {
+export interface Platform {
   id: number;
   name: string;
   slug: string;

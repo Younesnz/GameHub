@@ -2,12 +2,17 @@ import { SimpleGrid, useToast } from "@chakra-ui/react";
 import useGames from "../hooks/useGames";
 import { GameCard } from "./GameCard";
 import { GameCardSkeleton } from "./GameCardSkeleton";
+import { Platform } from "../hooks/usePlatform";
 
 interface Props {
   currentGenre: number | null;
+  currentPlatform: Platform | null;
 }
-export const Games = ({ currentGenre }: Props) => {
-  const { data, error, isLoading } = useGames(currentGenre);
+export const Games = ({ currentGenre, currentPlatform }: Props) => {
+  const { data, error, isLoading } = useGames(
+    currentGenre,
+    currentPlatform?.id
+  );
   const toast = useToast();
   const skeletonItems = new Array(12).fill(0);
   if (error)

@@ -4,9 +4,11 @@ import { Games } from "./components/Games";
 import { Genres } from "./components/Genres";
 import { useState } from "react";
 import { PlatformSelector } from "./components/PlatformSelector";
+import { Platform } from "./hooks/usePlatform";
 
 function App() {
   const [currentGenre, setCurrentGenre] = useState<number | null>(null);
+  const [currentPlatform, setCurrentPlatform] = useState<Platform | null>(null);
   return (
     <Grid
       templateColumns={{ lg: "240px 1fr" }}
@@ -28,8 +30,11 @@ function App() {
       </Show>
 
       <GridItem area="main">
-        <PlatformSelector />
-        <Games currentGenre={currentGenre} />
+        <PlatformSelector
+          currentPlatform={currentPlatform}
+          setCurrentPlatform={setCurrentPlatform}
+        />
+        <Games currentGenre={currentGenre} currentPlatform={currentPlatform} />
       </GridItem>
     </Grid>
   );
