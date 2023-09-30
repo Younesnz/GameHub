@@ -6,7 +6,7 @@ import { Genres } from "./components/Genres";
 function App() {
   return (
     <Grid
-      templateColumns={{ lg: "200px 1fr" }}
+      templateColumns={{ lg: "240px 1fr" }}
       gridTemplateAreas={{
         base: `"nav" "main"`,
         lg: `"nav nav" "aside main"`,
@@ -16,7 +16,7 @@ function App() {
         <NavBar />
       </GridItem>
       <Show above="lg">
-        <GridItem area="aside" bg="coral">
+        <GridItem area="aside">
           <Genres />
         </GridItem>
       </Show>
