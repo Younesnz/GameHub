@@ -3,6 +3,7 @@ import { NavBar } from "./components/NavBar";
 import { Games } from "./components/Games";
 import { Genres } from "./components/Genres";
 import { useState } from "react";
+import { PlatformSelector } from "./components/PlatformSelector";
 
 function App() {
   const [currentGenre, setCurrentGenre] = useState<number | null>(null);
@@ -27,6 +28,7 @@ function App() {
       </Show>
 
       <GridItem area="main">
+        <PlatformSelector />
         <Games currentGenre={currentGenre} />
       </GridItem>
     </Grid>

@@ -5,7 +5,7 @@ export interface Platform {
   slug: string;
 }
 
-export interface Game {
+interface Game {
   id: number;
   name: string;
   background_image: string;
