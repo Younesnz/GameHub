@@ -8,9 +8,9 @@ import {
   Spacer,
 } from "@chakra-ui/react";
 import { Game } from "../hooks/useGames";
-import { PlatformList } from "./PlatformList";
 import { CriticScore } from "./CriticScore";
 import cropImgUrl from "../services/cropImgUrl";
+import { PlatformIcon } from "./PlatformIcon";
 
 interface Props {
   game: Game;
@@ -39,9 +39,11 @@ export const GameCard = ({ game }: Props) => {
       </CardHeader>
       <CardBody pt={1} pb={4}>
         <HStack>
-          <PlatformList
-            platforms={game.parent_platforms.map(({ platform }) => platform)}
-          />
+          <HStack>
+            {game.parent_platforms.map(({ platform }) => (
+              <PlatformIcon platformSlug={platform.slug} />
+            ))}
+          </HStack>
           <Spacer />
           <CriticScore score={game.metacritic} />
         </HStack>
