@@ -10,11 +10,13 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import useGenres from "../hooks/useGenres";
+import { GenresSkeleton } from "./GenresSkeleton";
 
 export const Genres = () => {
   const { data, isLoading, error } = useGenres();
   const toast = useToast();
   const { colorMode } = useColorMode();
+  const skeletonItems = new Array(15).fill(0);
   if (error)
     toast({
       title: "Getting the Genres List Failed!",
@@ -29,6 +31,21 @@ export const Genres = () => {
       <Text fontSize="xl" mb={3} fontWeight="bold" px={3}>
         Genres
       </Text>
+      {isLoading &&
+        skeletonItems.map((_, index) => (
+          <ListItem
+            key={index}
+            borderBottom="1px"
+            borderColor={
+              { dark: "gray.700", light: "gray.200" }[colorMode.toString()]
+            }
+            py={1}
+            px={2}
+            ml={2}
+          >
+            <GenresSkeleton />
+          </ListItem>
+        ))}
       {data.map((genre) => (
         <ListItem
           key={genre.id}
