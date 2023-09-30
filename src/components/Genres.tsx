@@ -9,12 +9,12 @@ import {
   useColorMode,
   useToast,
 } from "@chakra-ui/react";
-import useGenres from "../hooks/useGenres";
+import useGenres, { Genre } from "../hooks/useGenres";
 import { GenresSkeleton } from "./GenresSkeleton";
 
 interface Props {
-  currentGenre: number | null;
-  setCurrentGenre: (id: number | null) => void;
+  currentGenre: Genre | null;
+  setCurrentGenre: (genre: Genre | null) => void;
 }
 
 export const Genres = ({ currentGenre, setCurrentGenre }: Props) => {
@@ -55,7 +55,7 @@ export const Genres = ({ currentGenre, setCurrentGenre }: Props) => {
         <ListItem
           key={genre.id}
           cursor="pointer"
-          backgroundColor={genre.id === currentGenre ? secondaryColor : ""}
+          backgroundColor={genre.id === currentGenre?.id ? secondaryColor : ""}
           _hover={{
             backgroundColor: { dark: "gray.700", light: "gray.200" }[
               colorMode.toString()
@@ -67,7 +67,7 @@ export const Genres = ({ currentGenre, setCurrentGenre }: Props) => {
           borderRadius={5}
           borderBottom="1px"
           borderColor={secondaryColor}
-          onClick={() => setCurrentGenre(genre.id)}
+          onClick={() => setCurrentGenre(genre)}
         >
           <HStack>
             <Image

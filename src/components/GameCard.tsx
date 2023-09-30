@@ -41,7 +41,7 @@ export const GameCard = ({ game }: Props) => {
         <HStack>
           <HStack>
             {game.parent_platforms.map(({ platform }) => (
-              <PlatformIcon platformSlug={platform.slug} />
+              <PlatformIcon key={platform.id} platformSlug={platform.slug} />
             ))}
           </HStack>
           <Spacer />

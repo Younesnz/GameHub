@@ -6,9 +6,14 @@ import { useState } from "react";
 import { PlatformSelector } from "./components/PlatformSelector";
 import { Platform } from "./hooks/usePlatform";
 
+export interface Query {
+  genre: number | null;
+  platform: Platform | null;
+}
 function App() {
-  const [currentGenre, setCurrentGenre] = useState<number | null>(null);
-  const [currentPlatform, setCurrentPlatform] = useState<Platform | null>(null);
+  const [query, setQuery] = useState<Query>({} as Query);
+  // const [currentGenre, setCurrentGenre] = useState<number | null>(null);
+  // const [currentPlatform, setCurrentPlatform] = useState<Platform | null>(null);
   return (
     <Grid
       templateColumns={{ lg: "240px 1fr" }}
@@ -23,18 +28,25 @@ function App() {
       <Show above="lg">
         <GridItem area="aside">
           <Genres
-            currentGenre={currentGenre}
-            setCurrentGenre={setCurrentGenre}
+            currentGenre={query.genre}
+            setCurrentGenre={(newGenre) =>
+              setQuery({ ...query, genre: newGenre })
+            }
           />
         </GridItem>
       </Show>
 
       <GridItem area="main">
         <PlatformSelector
-          currentPlatform={currentPlatform}
-          setCurrentPlatform={setCurrentPlatform}
+          currentPlatform={query.platform}
+          setCurrentPlatform={(newPlatform) =>
+            setQuery({
+              ...query,
+              platform: newPlatform,
+            })
+          }
         />
-        <Games currentGenre={currentGenre} currentPlatform={currentPlatform} />
+        <Games query={query} />
       </GridItem>
     </Grid>
   );
