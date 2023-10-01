@@ -12,11 +12,10 @@ export interface Query {
   genre: Genre | null;
   platform: Platform | null;
   order: string;
+  search: string;
 }
 function App() {
   const [query, setQuery] = useState<Query>({ order: "" } as Query);
-  // const [currentGenre, setCurrentGenre] = useState<number | null>(null);
-  // const [currentPlatform, setCurrentPlatform] = useState<Platform | null>(null);
   return (
     <Grid
       templateColumns={{ lg: "240px 1fr" }}
@@ -26,7 +25,11 @@ function App() {
       }}
     >
       <GridItem area="nav">
-        <NavBar />
+        <NavBar
+          setSearch={(newSearch) => {
+            setQuery({ ...query, search: newSearch });
+          }}
+        />
       </GridItem>
       <Show above="lg">
         <GridItem area="aside">
