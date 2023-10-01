@@ -1,13 +1,21 @@
 import { SearchIcon } from "@chakra-ui/icons";
 import { Input, InputGroup, InputLeftElement, Spinner } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Props {
+  search: string;
   setSearch: (search: string) => void;
 }
-export const SearchBar = ({ setSearch }: Props) => {
+export const SearchBar = ({ search, setSearch }: Props) => {
   const [isSearching, setSearching] = useState(false);
   const [timeOutId, setTimeOutId] = useState<number | undefined>(undefined);
+  const [inputValue, setInputValue] = useState("");
+
+  useEffect(() => {
+    if (search === "") {
+      setInputValue("");
+    }
+  }, [search]);
 
   const handleSearch = (value: string) => {
     if (!value || value.length < 3) {
@@ -33,7 +41,11 @@ export const SearchBar = ({ setSearch }: Props) => {
         placeholder="Search Games"
         borderRadius="full"
         variant="filled"
-        onChange={(n) => handleSearch(n.target.value)}
+        onChange={(e) => {
+          setInputValue(e.target.value);
+          handleSearch(e.target.value);
+        }}
+        value={inputValue}
       />
     </InputGroup>
   );
