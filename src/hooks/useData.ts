@@ -12,6 +12,7 @@ const useData = <T>(
   dependencyList?: any[]
 ) => {
   const [data, setData] = useState<T[]>([]);
+  const [count, setCount] = useState(0);
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(false);
 
@@ -24,6 +25,7 @@ const useData = <T>(
         .get<FetchData<T>>(endpoint, { ...conf, signal: controller.signal })
         .then((res) => {
           setData(res.data.results);
+          setCount(res.data.count);
           setLoading(false);
         })
         .catch((err) => {
@@ -36,7 +38,7 @@ const useData = <T>(
     },
     dependencyList ? [...dependencyList] : []
   );
-  return { data, error, isLoading };
+  return { data, error, isLoading, count };
 };
 
 export default useData;

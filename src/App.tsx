@@ -8,6 +8,7 @@ import { Platform } from "./hooks/usePlatform";
 import { Genre } from "./hooks/useGenres";
 import { SortSelector } from "./components/SortSelector";
 import { Filters } from "./components/Filters";
+import { GamesHeading } from "./components/GamesHeading";
 
 export interface Query {
   genre: Genre | null;
@@ -17,6 +18,7 @@ export interface Query {
 }
 function App() {
   const [query, setQuery] = useState<Query>({ order: "" } as Query);
+  const [resultCount, setResultCount] = useState(0);
   return (
     <Grid
       templateColumns={{ lg: "240px 1fr" }}
@@ -45,6 +47,7 @@ function App() {
       </Show>
 
       <GridItem area="main">
+        <GamesHeading query={query} count={resultCount} />
         <HStack spacing={3} mx={4} mb={2}>
           <PlatformSelector
             currentPlatform={query.platform}
@@ -63,7 +66,7 @@ function App() {
           <Filters query={query} setQuery={setQuery} />
         </HStack>
 
-        <Games query={query} />
+        <Games query={query} setCount={setResultCount} />
       </GridItem>
     </Grid>
   );
