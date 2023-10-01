@@ -11,7 +11,7 @@ import { Game } from "../hooks/useGames";
 import { CriticScore } from "./CriticScore";
 import cropImgUrl from "../services/cropImgUrl";
 import { PlatformIcon } from "./PlatformIcon";
-
+import NoImage from "../assets/NoImage.png";
 interface Props {
   game: Game;
 }
@@ -21,7 +21,9 @@ export const GameCard = ({ game }: Props) => {
     <Card overflow="hidden">
       <AspectRatio ratio={3 / 2}>
         <Image
-          src={cropImgUrl(game.background_image)}
+          src={
+            game.background_image ? cropImgUrl(game.background_image) : NoImage
+          }
           h={{ sm: "64", md: "52", lg: "48", xl: "40" }}
           objectFit="cover"
         />
