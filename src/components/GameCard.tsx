@@ -6,6 +6,7 @@ import {
   HStack,
   Image,
   Spacer,
+  useColorMode,
 } from "@chakra-ui/react";
 import { Game } from "../hooks/useGames";
 import { CriticScore } from "./CriticScore";
@@ -18,8 +19,15 @@ interface Props {
 }
 
 export const GameCard = ({ game }: Props) => {
+  const { colorMode } = useColorMode();
   return (
-    <Card overflow="hidden">
+    <Card
+      overflow="hidden"
+      cursor="pointer"
+      transition="all ease 0.3s"
+      bgColor={colorMode === "light" ? "gray.200" : "gray.700"}
+      _hover={{ shadow: "lg" }}
+    >
       <AspectRatio ratio={3 / 2}>
         <Image
           src={

@@ -1,5 +1,5 @@
 import { CloseIcon } from "@chakra-ui/icons";
-import { Box, HStack, IconButton, Text } from "@chakra-ui/react";
+import { Box, HStack, IconButton, Text, useColorMode } from "@chakra-ui/react";
 
 interface Props {
   label: string;
@@ -7,6 +7,8 @@ interface Props {
   onCancelClick: () => void;
 }
 export const FilterItem = ({ label, value, onCancelClick }: Props) => {
+  const { colorMode } = useColorMode();
+  const secondaryColor = { dark: "gray.300", light: "gray.700" }[colorMode];
   return (
     <Box
       py={1}
@@ -15,7 +17,7 @@ export const FilterItem = ({ label, value, onCancelClick }: Props) => {
       borderColor="gray.500"
       borderRadius={5}
       fontSize="xs"
-      color="gray.300"
+      color={secondaryColor}
     >
       <HStack cursor="default" userSelect="none">
         <Text>{label + ":"}</Text>
