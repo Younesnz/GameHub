@@ -14,7 +14,7 @@ const useData = <T>(
   const [data, setData] = useState<T[]>([]);
   const [count, setCount] = useState(0);
   const [error, setError] = useState("");
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(
     () => {
