@@ -12,6 +12,7 @@ import { CriticScore } from "./CriticScore";
 import cropImgUrl from "../services/cropImgUrl";
 import { PlatformIcon } from "./PlatformIcon";
 import NoImage from "../assets/NoImage.png";
+import { Rating } from "./Rating";
 interface Props {
   game: Game;
 }
@@ -28,18 +29,7 @@ export const GameCard = ({ game }: Props) => {
           objectFit="cover"
         />
       </AspectRatio>
-
-      <CardHeader
-        py={2}
-        whiteSpace="nowrap"
-        overflow="hidden"
-        textOverflow="ellipsis"
-        fontWeight="semibold"
-        fontSize="lg"
-      >
-        {game.name}
-      </CardHeader>
-      <CardBody pt={1} pb={4}>
+      <CardBody pt={2} pb={1}>
         <HStack>
           <HStack>
             {game.parent_platforms.map(({ platform }) => (
@@ -49,6 +39,20 @@ export const GameCard = ({ game }: Props) => {
           <Spacer />
           <CriticScore score={game.metacritic} />
         </HStack>
+      </CardBody>
+      <CardHeader
+        py={1}
+        whiteSpace="nowrap"
+        overflow="hidden"
+        textOverflow="ellipsis"
+        fontWeight="semibold"
+        fontSize="lg"
+      >
+        {game.name}
+      </CardHeader>
+
+      <CardBody pt={0}>
+        {!!game.rating_top && <Rating rating={game.rating_top} />}
       </CardBody>
     </Card>
   );
