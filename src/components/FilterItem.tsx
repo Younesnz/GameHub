@@ -11,6 +11,7 @@ export const FilterItem = ({ label, value, onCancelClick }: Props) => {
   const secondaryColor = { dark: "gray.300", light: "gray.700" }[colorMode];
   return (
     <Box
+      width="fit-content"
       py={1}
       px={2}
       border="1px"

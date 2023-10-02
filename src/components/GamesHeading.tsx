@@ -1,4 +1,12 @@
-import { HStack, Heading, Text, useColorMode } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  HStack,
+  Heading,
+  Hide,
+  Text,
+  useColorMode,
+} from "@chakra-ui/react";
 import { Query } from "../App";
 import { SearchIcon } from "@chakra-ui/icons";
 
@@ -44,27 +52,32 @@ export const GamesHeading = ({ query, count }: Props) => {
   const GamesCount = () => {
     return (
       <Text
-        fontSize="md"
+        fontSize={{ base: "xs", md: "sm", xl: "md" }}
         fontWeight="normal"
         py={1}
         px={2}
         bgColor={secondaryColor.bg}
         color={secondaryColor.text}
         borderRadius={6}
-        alignSelf="center"
-        mt="10px"
+        mt={{ lg: "8px", xl: "10px" }}
       >
         {count.toLocaleString()} found
       </Text>
     );
   };
   return (
-    <Heading as="h1" fontSize="4xl" mb={5} ml={3}>
-      <HStack>
-        {query.search && <SearchText />}
-        <Text>{title}</Text>
+    <Box mb={5} ml={3}>
+      <Flex
+        flexDir={{ base: "column", sm: "row" }}
+        alignItems={{ base: "start", sm: "center" }}
+        gap={2}
+      >
+        <Hide below="sm">{query.search && <SearchText />}</Hide>
+        <Heading fontSize={{ base: "xl", sm: "2xl", lg: "3xl", xl: "4xl" }}>
+          {title}
+        </Heading>
         {count > 0 && <GamesCount />}
-      </HStack>
-    </Heading>
+      </Flex>
+    </Box>
   );
 };

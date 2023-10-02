@@ -18,7 +18,7 @@ export const SearchBar = ({ search, setSearch }: Props) => {
   }, [search]);
 
   const handleSearch = (value: string) => {
-    if (!value || value.length < 3) {
+    if (value.length < 3 && value.length > 0) {
       clearTimeout(timeOutId);
       setSearching(false);
       return;

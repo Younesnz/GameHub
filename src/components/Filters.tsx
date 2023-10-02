@@ -1,4 +1,4 @@
-import { HStack } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { Query } from "../App";
 import { FilterItem } from "./FilterItem";
 
@@ -8,7 +8,7 @@ interface Props {
 }
 export const Filters = ({ query, setQuery }: Props) => {
   return (
-    <HStack>
+    <Flex gap={2} flexDir={{ base: "column", md: "row" }}>
       {query.genre && (
         <FilterItem
           label="Genre"
@@ -26,10 +26,14 @@ export const Filters = ({ query, setQuery }: Props) => {
       {query.search && (
         <FilterItem
           label="Search"
-          value={query.search}
+          value={
+            query.search.length <= 15
+              ? query.search
+              : query.search.slice(0, 15) + "..."
+          }
           onCancelClick={() => setQuery({ ...query, search: "" })}
         />
       )}
-    </HStack>
+    </Flex>
   );
 };
