@@ -79,7 +79,7 @@ function App() {
           </HStack>
         </Hide>
         <Show below="md">
-          <FiltersDrawer />
+          <FiltersDrawer query={query} setQuery={setQuery} />
         </Show>
         <Hide above="xl">
           <Box ml={4} mt={3}>
