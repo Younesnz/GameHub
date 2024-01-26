@@ -35,9 +35,7 @@ export const useInfiniteData = <T>(
         })
         .then((res) => res.data),
     initialPageParam: 1,
-    getNextPageParam: (LastPage, allPages) => {
-      if (LastPage.next === null) return undefined;
-      return allPages.length + 1;
-    },
+    getNextPageParam: (LastPage, allPages) =>
+      LastPage.next ? allPages.length + 1 : undefined,
   });
 export default useData;

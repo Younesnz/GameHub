@@ -78,13 +78,16 @@ export const Games = ({ query, setCount }: Props) => {
           </React.Fragment>
         ))}
       </SimpleGrid>
-      <Button
-        display={hasNextPage ? "initial" : "none"}
-        disabled={isFetchingNextPage}
-        onClick={() => fetchNextPage()}
-      >
-        {isFetchingNextPage ? "Loading..." : "Load More"}
-      </Button>
+      {hasNextPage && (
+        <Button
+          mx="4"
+          mb="4"
+          disabled={isFetchingNextPage}
+          onClick={() => fetchNextPage()}
+        >
+          {isFetchingNextPage ? "Loading..." : "Load More"}
+        </Button>
+      )}
     </>
   );
 };
