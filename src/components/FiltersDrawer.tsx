@@ -31,8 +31,10 @@ interface Props {
 }
 export const FiltersDrawer = ({ query, setQuery }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { data: Gdata, isLoading: GisLoading } = useGenres();
-  const { data: Pdata, isLoading: PisLoading } = usePlatform();
+  const { data: { results: Gdata } = {}, isLoading: GisLoading } = useGenres();
+
+  const { data: { results: Pdata } = {}, isLoading: PisLoading } =
+    usePlatform();
   const sortData = [
     { value: "", label: "Relevance" },
     { value: "-metacritic", label: "Popularity" },
@@ -48,10 +50,11 @@ export const FiltersDrawer = ({ query, setQuery }: Props) => {
   const handleSubmit = () => {
     const newQuery = { ...query };
 
-    newQuery.genre = Gdata.find((genre) => genre.id === +selectedGenre) || null;
+    newQuery.genre =
+      Gdata?.find((genre) => genre.id === +selectedGenre) || null;
 
     newQuery.platform =
-      Pdata.find((platform) => platform.id === +selectedPlatform) || null;
+      Pdata?.find((platform) => platform.id === +selectedPlatform) || null;
 
     newQuery.order = selectedOrder;
 
@@ -107,7 +110,7 @@ export const FiltersDrawer = ({ query, setQuery }: Props) => {
                       <Radio key={-1} value={""}>
                         All
                       </Radio>
-                      {Gdata.map((g) => (
+                      {Gdata?.map((g) => (
                         <Radio key={g.id} value={g.id + ""}>
                           {g.name}
                         </Radio>
@@ -137,7 +140,7 @@ export const FiltersDrawer = ({ query, setQuery }: Props) => {
                       <Radio key={-1} value={""}>
                         All
                       </Radio>
-                      {Pdata.map((p) => (
+                      {Pdata?.map((p) => (
                         <Radio key={p.id} value={p.id + ""}>
                           {p.name}
                         </Radio>

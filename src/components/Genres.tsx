@@ -18,7 +18,7 @@ interface Props {
 }
 
 export const Genres = ({ currentGenre, setCurrentGenre }: Props) => {
-  const { data, isLoading, error } = useGenres();
+  const { data: { results: data } = {}, isLoading, error } = useGenres();
   const toast = useToast();
   const { colorMode } = useColorMode();
   const skeletonItems = new Array(15).fill(0);
@@ -28,7 +28,7 @@ export const Genres = ({ currentGenre, setCurrentGenre }: Props) => {
   if (error)
     toast({
       title: "Getting the Genres List Failed!",
-      description: error,
+      description: error.message,
       duration: 5000,
       isClosable: true,
       status: "error",
@@ -51,7 +51,7 @@ export const Genres = ({ currentGenre, setCurrentGenre }: Props) => {
             <GenresSkeleton />
           </ListItem>
         ))}
-      {data.map((genre) => (
+      {data?.map((genre) => (
         <ListItem
           key={genre.id}
           cursor="pointer"

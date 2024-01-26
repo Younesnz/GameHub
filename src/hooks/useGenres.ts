@@ -8,6 +8,15 @@ export interface Genre {
   image_background: string;
 }
 
-const useGenres = () => useData<Genre>("/genres");
+const useGenres = () => useData<Genre>("/genres", ["genres"]);
+// export default () =>
+//   useQuery<Genre[], Error, Genre[]>({
+//     queryKey: ["genres"],
+//     queryFn: () =>
+//       apiClient.get<Genre[]>("/genres").then((res) => {
+//         console.log(res.data.results);
+//         return res.data;
+//       }),
+//   });
 
 export default useGenres;

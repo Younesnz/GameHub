@@ -26,7 +26,7 @@ export const PlatformSelector = ({
   currentPlatform,
   setCurrentPlatform,
 }: Props) => {
-  const { data } = usePlatform();
+  const { data: { results: data } = {} } = usePlatform();
   return (
     <Menu>
       <MenuButton
@@ -41,7 +41,7 @@ export const PlatformSelector = ({
         {currentPlatform ? currentPlatform.name : "Platforms"}
       </MenuButton>
       <MenuList>
-        {data.map((platform) => (
+        {data?.map((platform) => (
           <MenuItem
             key={platform.id}
             transition="all ease 0.3s"

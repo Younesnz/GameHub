@@ -18,13 +18,17 @@ interface Props {
   setCount: (count: number) => void;
 }
 export const Games = ({ query, setCount }: Props) => {
-  const { data, error, isLoading, count } = useGames(query);
+  const {
+    data: { results: data, count = 0 } = {},
+    error,
+    isLoading,
+  } = useGames(query);
   const toast = useToast();
   const skeletonItems = new Array(12).fill(0);
   if (error)
     toast({
       title: "Getting the Games List Failed!",
-      description: error,
+      description: error.message,
       duration: 5000,
       isClosable: true,
       status: "error",
@@ -32,7 +36,7 @@ export const Games = ({ query, setCount }: Props) => {
     });
 
   useEffect(() => setCount(count), [count]);
-  if (!isLoading && data.length === 0)
+  if (!isLoading && data?.length === 0)
     return (
       <Flex justify="center" alignItems="center">
         <Alert
@@ -57,7 +61,7 @@ export const Games = ({ query, setCount }: Props) => {
   return (
     <SimpleGrid columns={{ sm: 1, md: 2, lg: 3, xl: 4 }} spacing="4" p="4">
       {isLoading && skeletonItems.map((_, i) => <GameCardSkeleton key={i} />)}
-      {data.map((game) => (
+      {data?.map((game) => (
         <GameCard key={game.id} game={game} />
       ))}
     </SimpleGrid>

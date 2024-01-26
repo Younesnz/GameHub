@@ -10,4 +10,5 @@ export interface Platform {
   platforms: PlatformDetails[];
 }
 
-export default () => useData<Platform>("/platforms/lists/parents");
+export default () =>
+  useData<Platform>("/platforms/lists/parents", ["platform"]);
