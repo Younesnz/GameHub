@@ -1,5 +1,5 @@
 import { Query } from "../App";
-import useData from "./useData";
+import { useInfiniteData } from "./useData";
 import { Platform } from "./usePlatform";
 
 // export interface Platform {
@@ -23,7 +23,7 @@ const useGames = (query: Query) => {
     ordering: query.order,
     search: query.search,
   };
-  return useData<Game>("/games", ["games", { ...params }], {
+  return useInfiniteData<Game>("/games", ["games", { ...params }], {
     params,
   });
 };

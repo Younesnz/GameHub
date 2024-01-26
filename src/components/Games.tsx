@@ -3,6 +3,7 @@ import {
   AlertDescription,
   AlertIcon,
   AlertTitle,
+  Button,
   Flex,
   SimpleGrid,
   useToast,
@@ -12,6 +13,7 @@ import { GameCard } from "./GameCard";
 import { GameCardSkeleton } from "./GameCardSkeleton";
 import { Query } from "../App";
 import { useEffect } from "react";
+import React from "react";
 
 interface Props {
   query: Query;
@@ -19,9 +21,12 @@ interface Props {
 }
 export const Games = ({ query, setCount }: Props) => {
   const {
-    data: { results: data, count = 0 } = {},
+    data,
     error,
     isLoading,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
   } = useGames(query);
   const toast = useToast();
   const skeletonItems = new Array(12).fill(0);
@@ -35,8 +40,11 @@ export const Games = ({ query, setCount }: Props) => {
       position: "top",
     });
 
-  useEffect(() => setCount(count), [count]);
-  if (!isLoading && data?.length === 0)
+  useEffect(() => {
+    const count = data?.pages[0].count || 0;
+    setCount(count), [count];
+  });
+  if (!isLoading && data?.pages?.length === 0)
     return (
       <Flex justify="center" alignItems="center">
         <Alert
@@ -59,11 +67,24 @@ export const Games = ({ query, setCount }: Props) => {
       </Flex>
     );
   return (
-    <SimpleGrid columns={{ sm: 1, md: 2, lg: 3, xl: 4 }} spacing="4" p="4">
-      {isLoading && skeletonItems.map((_, i) => <GameCardSkeleton key={i} />)}
-      {data?.map((game) => (
-        <GameCard key={game.id} game={game} />
-      ))}
-    </SimpleGrid>
+    <>
+      <SimpleGrid columns={{ sm: 1, md: 2, lg: 3, xl: 4 }} spacing="4" p="4">
+        {isLoading && skeletonItems.map((_, i) => <GameCardSkeleton key={i} />)}
+        {data?.pages.map((page, index) => (
+          <React.Fragment key={index}>
+            {page.results?.map((game) => (
+              <GameCard key={game.id} game={game} />
+            ))}
+          </React.Fragment>
+        ))}
+      </SimpleGrid>
+      <Button
+        display={hasNextPage ? "initial" : "none"}
+        disabled={isFetchingNextPage}
+        onClick={() => fetchNextPage()}
+      >
+        {isFetchingNextPage ? "Loading..." : "Load More"}
+      </Button>
+    </>
   );
 };

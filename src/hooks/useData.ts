@@ -1,10 +1,11 @@
 import apiClient from "../services/apiClient";
 import { AxiosRequestConfig } from "axios";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 interface FetchData<T> {
   count: number;
   results: T[];
+  next: string | null;
 }
 
 const useData = <T>(
@@ -20,4 +21,23 @@ const useData = <T>(
         .then((res) => res.data),
   });
 
+export const useInfiniteData = <T>(
+  endpoint: string,
+  queryKey: any[],
+  conf?: AxiosRequestConfig
+) =>
+  useInfiniteQuery({
+    queryKey,
+    queryFn: ({ pageParam }) =>
+      apiClient
+        .get<FetchData<T>>(endpoint, {
+          params: { ...conf?.params, page: pageParam },
+        })
+        .then((res) => res.data),
+    initialPageParam: 1,
+    getNextPageParam: (LastPage, allPages) => {
+      if (LastPage.next === null) return undefined;
+      return allPages.length + 1;
+    },
+  });
 export default useData;
