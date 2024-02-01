@@ -1,11 +1,10 @@
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
+import useQueryStore from "../hooks/stores/queryStore";
 
-interface Props {
-  sort: string;
-  setSort: (sort: string) => void;
-}
-export const SortSelector = ({ sort, setSort }: Props) => {
+export const SortSelector = () => {
+  const order = useQueryStore((s) => s.query.order);
+  const setOrder = useQueryStore((s) => s.setOrder);
   const sortData = [
     { value: "", label: "Relevance" },
     { value: "-metacritic", label: "Popularity" },
@@ -16,11 +15,11 @@ export const SortSelector = ({ sort, setSort }: Props) => {
   return (
     <Menu>
       <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-        Order By: {sortData.find((s) => s.value === sort)?.label}
+        Order By: {sortData.find((s) => s.value === order)?.label}
       </MenuButton>
       <MenuList>
         {sortData.map((sort, index) => (
-          <MenuItem key={index} onClick={() => setSort(sort.value)}>
+          <MenuItem key={index} onClick={() => setOrder(sort.value)}>
             {sort.label}
           </MenuItem>
         ))}

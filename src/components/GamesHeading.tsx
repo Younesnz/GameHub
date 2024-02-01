@@ -7,14 +7,11 @@ import {
   Text,
   useColorMode,
 } from "@chakra-ui/react";
-import { Query } from "../App";
 import { SearchIcon } from "@chakra-ui/icons";
+import useQueryStore from "../hooks/stores/queryStore";
 
-interface Props {
-  query: Query;
-  count: number;
-}
-export const GamesHeading = ({ query, count }: Props) => {
+export const GamesHeading = () => {
+  const { query, resultCount: count } = useQueryStore();
   const { colorMode } = useColorMode();
   const title = `${query.platform?.name || ""} ${
     query.genre?.name || ""

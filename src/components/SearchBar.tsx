@@ -1,16 +1,14 @@
 import { SearchIcon } from "@chakra-ui/icons";
 import { Input, InputGroup, InputLeftElement, Spinner } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import useQueryStore from "../hooks/stores/queryStore";
 
-interface Props {
-  search: string;
-  setSearch: (search: string) => void;
-}
-export const SearchBar = ({ search, setSearch }: Props) => {
+export const SearchBar = () => {
   const [isSearching, setSearching] = useState(false);
   const [timeOutId, setTimeOutId] = useState<number | undefined>(undefined);
   const [inputValue, setInputValue] = useState("");
-
+  const search = useQueryStore((s) => s.query.search);
+  const setSearch = useQueryStore((s) => s.setSearch);
   useEffect(() => {
     if (search === "") {
       setInputValue("");

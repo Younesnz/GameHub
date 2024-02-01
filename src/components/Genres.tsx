@@ -9,16 +9,14 @@ import {
   useColorMode,
   useToast,
 } from "@chakra-ui/react";
-import useGenres, { Genre } from "../hooks/useGenres";
+import useGenres from "../hooks/useGenres";
 import { GenresSkeleton } from "./GenresSkeleton";
+import useQueryStore from "../hooks/stores/queryStore";
 
-interface Props {
-  currentGenre: Genre | null;
-  setCurrentGenre: (genre: Genre | null) => void;
-}
-
-export const Genres = ({ currentGenre, setCurrentGenre }: Props) => {
+export const Genres = () => {
   const { data: { results: data } = {}, isLoading, error } = useGenres();
+  const currentGenre = useQueryStore((s) => s.query.genre);
+  const setGenre = useQueryStore((s) => s.setGenre);
   const toast = useToast();
   const { colorMode } = useColorMode();
   const skeletonItems = new Array(15).fill(0);
@@ -67,7 +65,7 @@ export const Genres = ({ currentGenre, setCurrentGenre }: Props) => {
           borderRadius={5}
           borderBottom="1px"
           borderColor={secondaryColor}
-          onClick={() => setCurrentGenre(genre)}
+          onClick={() => setGenre(genre)}
         >
           <HStack>
             <Image

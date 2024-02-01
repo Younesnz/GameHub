@@ -3,18 +3,14 @@ import Logo from "../assets/GameHubLogo.png";
 import { ColorModeSwitch } from "./ColorModeSwitch";
 import { SearchBar } from "./SearchBar";
 
-interface Props {
-  setSearch: (search: string) => void;
-  search: string;
-}
-export const NavBar = ({ setSearch, search }: Props) => {
+export const NavBar = () => {
   return (
     <>
       <HStack as="nav" py="0.5rem" px="2rem">
         <Image src={Logo} boxSize="4rem" />
         <Text as="h1">GameHub</Text>
         <Hide below="md">
-          <SearchBar setSearch={setSearch} search={search} />
+          <SearchBar />
         </Hide>
         <Show below="md">
           <Spacer />
@@ -23,7 +19,7 @@ export const NavBar = ({ setSearch, search }: Props) => {
       </HStack>
       <Show below="md">
         <Box maxW="90vw" mt={2} mb={4}>
-          <SearchBar setSearch={setSearch} search={search} />
+          <SearchBar />
         </Box>
       </Show>
     </>

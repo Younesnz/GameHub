@@ -21,15 +21,13 @@ import {
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import { BiFilterAlt } from "react-icons/bi";
-import { Query } from "../App";
+
 import useGenres from "../hooks/useGenres";
 import usePlatform from "../hooks/usePlatform";
+import useQueryStore from "../hooks/stores/queryStore";
 
-interface Props {
-  query: Query;
-  setQuery: (query: Query) => void;
-}
-export const FiltersDrawer = ({ query, setQuery }: Props) => {
+export const FiltersDrawer = () => {
+  const { query, setGenre, setPlatform, setOrder } = useQueryStore();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { data: { results: Gdata } = {}, isLoading: GisLoading } = useGenres();
 
@@ -44,21 +42,15 @@ export const FiltersDrawer = ({ query, setQuery }: Props) => {
   ];
   const [selectedGenre, setSelectedGenre] = useState("");
   const [selectedPlatform, setSelectedPlatform] = useState("");
-  const [selectedOrder, setSelectedOrder] = useState(query.order);
+  const [selectedOrder, setSelectedOrder] = useState(query.order || "");
   const btnRef = useRef(null);
 
   const handleSubmit = () => {
-    const newQuery = { ...query };
-
-    newQuery.genre =
-      Gdata?.find((genre) => genre.id === +selectedGenre) || null;
-
-    newQuery.platform =
-      Pdata?.find((platform) => platform.id === +selectedPlatform) || null;
-
-    newQuery.order = selectedOrder;
-
-    setQuery(newQuery);
+    setGenre(Gdata?.find((genre) => genre.id === +selectedGenre) || null);
+    setPlatform(
+      Pdata?.find((platform) => platform.id === +selectedPlatform) || null
+    );
+    setOrder(selectedOrder);
   };
 
   return (
@@ -70,7 +62,7 @@ export const FiltersDrawer = ({ query, setQuery }: Props) => {
         onClick={() => {
           setSelectedGenre(query.genre?.id ? query.genre.id + "" : "");
           setSelectedPlatform(query.platform?.id ? query.platform.id + "" : "");
-          setSelectedOrder(query.order);
+          setSelectedOrder(query.order || "");
           onOpen();
         }}
         leftIcon={<BiFilterAlt />}

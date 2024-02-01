@@ -12,17 +12,14 @@ import {
 import useGames from "../hooks/useGames";
 import { GameCard } from "./GameCard";
 import { GameCardSkeleton } from "./GameCardSkeleton";
-import { Query } from "../App";
 import { useEffect } from "react";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import useQueryStore from "../hooks/stores/queryStore";
 
-interface Props {
-  query: Query;
-  setCount: (count: number) => void;
-}
-export const Games = ({ query, setCount }: Props) => {
-  const { data, error, isLoading, fetchNextPage, hasNextPage } =
+export const Games = () => {
+  const { query, setResultCount } = useQueryStore();
+  const { data, error, isLoading, fetchNextPage, hasNextPage, count } =
     useGames(query);
   const toast = useToast();
   const skeletonItems = new Array(12).fill(0);
@@ -37,9 +34,8 @@ export const Games = ({ query, setCount }: Props) => {
     });
 
   useEffect(() => {
-    const count = data?.pages[0].count || 0;
-    setCount(count), [count];
-  });
+    setResultCount(count || 0);
+  }, [count]);
   if (!isLoading && data?.pages?.length === 0)
     return (
       <Flex justify="center" alignItems="center">

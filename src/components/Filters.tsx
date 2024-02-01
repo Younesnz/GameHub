@@ -1,26 +1,23 @@
 import { Flex } from "@chakra-ui/react";
-import { Query } from "../App";
 import { FilterItem } from "./FilterItem";
+import useQueryStore from "../hooks/stores/queryStore";
 
-interface Props {
-  query: Query;
-  setQuery: (query: Query) => void;
-}
-export const Filters = ({ query, setQuery }: Props) => {
+export const Filters = () => {
+  const { query, setGenre, setPlatform, setSearch } = useQueryStore();
   return (
     <Flex gap={2} flexDir={{ base: "column", md: "row" }}>
       {query.genre && (
         <FilterItem
           label="Genre"
           value={query.genre.name}
-          onCancelClick={() => setQuery({ ...query, genre: null })}
+          onCancelClick={() => setGenre(null)}
         />
       )}
       {query.platform && (
         <FilterItem
           label="Platform"
           value={query.platform.name}
-          onCancelClick={() => setQuery({ ...query, platform: null })}
+          onCancelClick={() => setPlatform(null)}
         />
       )}
       {query.search && (
@@ -31,7 +28,7 @@ export const Filters = ({ query, setQuery }: Props) => {
               ? query.search
               : query.search.slice(0, 15) + "..."
           }
-          onCancelClick={() => setQuery({ ...query, search: "" })}
+          onCancelClick={() => setSearch("")}
         />
       )}
     </Flex>

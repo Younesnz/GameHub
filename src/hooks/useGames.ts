@@ -1,4 +1,4 @@
-import { Query } from "../App";
+import { Query } from "./stores/queryStore";
 import { useInfiniteData } from "./useData";
 import { Platform } from "./usePlatform";
 
@@ -23,9 +23,10 @@ const useGames = (query: Query) => {
     ordering: query.order,
     search: query.search,
   };
-  return useInfiniteData<Game>("/games", ["games", { ...params }], {
+  const result = useInfiniteData<Game>("/games", ["games", { ...params }], {
     params,
   });
+  return { ...result, count: result.data?.pages[0].count };
 };
 
 export default useGames;

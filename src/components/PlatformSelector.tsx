@@ -10,23 +10,19 @@ import {
   Spacer,
   Text,
 } from "@chakra-ui/react";
-import usePlatform, { Platform } from "../hooks/usePlatform";
+import usePlatform from "../hooks/usePlatform";
 import { PlatformIcon } from "./PlatformIcon";
+import useQueryStore from "../hooks/stores/queryStore";
 
-interface Props {
-  currentPlatform: Platform | null;
-  setCurrentPlatform: (platform: Platform | null) => void;
-}
 const renderGameCount = (count: number) => {
   if (count >= 100_000) return Math.round(count / 1000) + "K";
   if (count >= 1000) return (count / 1000).toFixed(1) + "K";
   return count.toString();
 };
-export const PlatformSelector = ({
-  currentPlatform,
-  setCurrentPlatform,
-}: Props) => {
+export const PlatformSelector = () => {
   const { data: { results: data } = {} } = usePlatform();
+  const currentPlatform = useQueryStore((s) => s.query.platform);
+  const setPlatform = useQueryStore((s) => s.setPlatform);
   return (
     <Menu>
       <MenuButton
@@ -46,7 +42,7 @@ export const PlatformSelector = ({
             key={platform.id}
             transition="all ease 0.3s"
             onClick={() => {
-              setCurrentPlatform(platform);
+              setPlatform(platform);
             }}
           >
             <HStack spacing={2} minW="240px">
